@@ -29,14 +29,17 @@ public class UsermanagerMenu {
                     adminController.print();
                     break;
                 case "2":
+                    adminController.finduser();
                     break;
                 case "3":
+                    adminController.topup();
                     break;
                 case "4":
+                    adminController.deduct();
                     break;
                 case "5":
                     break;
-                case "6":
+                case "6":adminController.deluser();
                     break;
                 case "7":
                     break;

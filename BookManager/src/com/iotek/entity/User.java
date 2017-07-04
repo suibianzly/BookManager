@@ -84,13 +84,13 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User{" +
-				"uId=" + uId +
-				", uName='" + uName + '\'' +
-				", uPass='" + uPass + '\'' +
-				", uSex='" + uSex + '\'' +
-				", uAge=" + uAge +
-				", uLevel=" + uLevel +
-				", upoint=" + upoint +
+				"用户ID" + uId +
+				", 用户名'" + uName + '\'' +
+				", 用户密码'" + uPass + '\'' +
+				", 用户性别'" + uSex + '\'' +
+				", 用户年龄" + uAge +
+				", 用户等级" + uLevel +
+				", 用户积分" + upoint +
 				'}';
 	}
 }

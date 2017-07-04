@@ -2,9 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/com/iotek/constant/BookType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/iotek/controller/AdminController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/iotek/controller/BookControllerTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/iotek/controller/UserController.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/com/iotek/dao/BookDaoImplTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/iotek/entity/User.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/iotek/view/BookMenu.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/iotek/view/MainMenu.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/iotek/view/Start.java" charset="UTF-8" />
