@@ -41,7 +41,8 @@ public class UsermanagerMenu {
                     break;
                 case "6":adminController.deluser();
                     break;
-                case "7":
+                case "7":UchangeMenu uchangeMenu=new UchangeMenu();
+                    uchangeMenu.uMenu(adminController);
                     break;
                 case "0":
                     return;

@@ -69,6 +69,18 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    public void SaveUser(ArrayList<User> users) {
+        this.users=users;
+        try {
+            //将数据写入文件中。
+            IoUntils.save(path, fos, oos).writeObject(users);
+            IoUntils.closeAll(fis, ois, fos, oos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public int getMaxId() {
         int maxid = 0;
