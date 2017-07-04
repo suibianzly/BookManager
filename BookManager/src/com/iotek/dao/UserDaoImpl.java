@@ -15,6 +15,9 @@ public class UserDaoImpl implements UserDao {
     FileOutputStream fos = null;
     ObjectOutputStream oos = null;
 
+    public ArrayList<User> getUsers() {
+        return users;
+    }
 
     public UserDaoImpl() {
         try {
@@ -30,9 +33,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByNameAndPass(String name, String pass) {
-        ArrayList<User> us=new ArrayList<User>();
+        ArrayList<User> us = new ArrayList<User>();
         us.addAll(users);
-        us.add(new User(1000,"adm","adm","男",22,1,1000));
+        us.add(new User(1000, "adm", "adm", "男", 22, 1, 1000));
         if (us.size() != 0) {
             for (User u : us) {
                 if (u.getuName().equals(name) && u.getuPass().equals(pass)) {
@@ -46,7 +49,7 @@ public class UserDaoImpl implements UserDao {
     public User getUserByNames(String name) {
         if (users.size() != 0) {
             for (User u : users) {
-                if (u.getuName().equals(name) ) {
+                if (u.getuName().equals(name)) {
                     return u;
                 }
             }

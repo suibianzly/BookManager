@@ -38,7 +38,7 @@ public class ManagerMenu {
             case 2:
                 break;
             case 3:UsermanagerMenu usermanagerMenu=new UsermanagerMenu();
-                usermanagerMenu.usmm(adminController,users);
+                usermanagerMenu.usmm(adminController);
                 break;
             case 4:
                 break;

@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Created by Administrator on 2017/7/4.
  */
 public class UsermanagerMenu {
-    public void usmm(AdminController adminController,ArrayList<User>users){
+    public void usmm(AdminController adminController){
         Scanner sc=new Scanner(System.in);
 
         boolean falg=true;
@@ -26,7 +26,7 @@ public class UsermanagerMenu {
             String key=sc.next();
             switch (key){
                 case "1":
-                    adminController.print(users);
+                    adminController.print();
                     break;
                 case "2":
                     break;
