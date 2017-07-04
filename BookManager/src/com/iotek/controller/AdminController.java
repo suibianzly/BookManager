@@ -40,10 +40,13 @@ public class AdminController {
                 users.get(i).setUpoint(users.get(i).getUpoint() + point);
 
             }
+            userDao.SaveUser(users);
             System.out.println(users.get(i));
             break;
         }
+
     }
+
     public void deduct(){
         System.out.println("请输入用户名");
         String name=sc.next();
