@@ -17,7 +17,7 @@ public class Book implements Serializable {
     private double price;
     private int discount;
     private int haslended;
-    private int bNumber;
+    //private int bNumber;
 
     public Book() {
     }
@@ -98,35 +98,46 @@ public class Book implements Serializable {
         this.haslended = haslended;
     }
 
-    public void setbNumber(int bNumber){
+  /*  public void setbNumber(int bNumber){
         this.bNumber=bNumber;
     }
-
-    public void addbNumber(int bNumber){
-        this.bNumber+=bNumber;
+*/
+    public void addDiscount(int Discount){
+        this.discount+=Discount;
     }
 
     @Override
     public String toString() {
-        return "Book{" +
-                "bId=" + bId +
-                ", bName='" + bName + '\'' +
-                ", bStock=" + bStock +
-                ", bType='" + bType + '\'' +
-                ", author='" + author + '\'' +
-                ", price=" + price +
-                ", discount=" + discount +
-                ", haslended=" + haslended +
-                '}';
+        return   "书名:" + getbName()+
+                " 作者:" + getAuthor() +
+                " 剩余数量:" + getbStock()+
+                " 价格:" + getPrice()+
+                " 类型:" + getbType()+
+                " 借出次数:" + getDiscount()+
+                " 已借出的数量:" + getHaslended()+
+                " 书的ID:" + getbId();
     }
 
-    public int getbNumber() {
+    /*public int getbNumber() {
         return bNumber;
 
-    }
+    }*/
 
     public void borrowStock(int borrownum) {
         delbStock(borrownum);
-        addbNumber(borrownum);
+        addDiscount(borrownum);
+        addHaslended(borrownum);
+    }
+
+    private void addHaslended(int borrownum) {
+        this.haslended+=borrownum;
+    }
+    private void delHaslended(int borrownum) {
+        this.haslended-=borrownum;
+    }
+
+    public void returnStock(int returnwnum) {
+        addbStock(returnwnum);
+        delHaslended(returnwnum);
     }
 }

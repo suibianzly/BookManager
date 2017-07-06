@@ -2,7 +2,6 @@ package com.iotek.controller;
 
 import com.iotek.dao.UserDaoImpl;
 import com.iotek.entity.User;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -91,17 +90,27 @@ public class AdminController {
     }
     public void amendname(){
         int index=find();
-        System.out.println("请输入要更正的用户名");
-        String name=sc.next();
-        users.get(index).setuName(name);
-        System.out.println(users.get(index));
+        if(index!=-1){
+            System.out.println("请输入要更正的用户名");
+            String name=sc.next();
+            users.get(index).setuName(name);
+            System.out.println(users.get(index));
+        }else{
+            System.out.println("无此用户");
+        }
+
     }
     public void amendpass(){
         int index=find();
-        System.out.println("请输入要更正的用户密码");
-        String pass=sc.next();
-        users.get(index).setuPass(pass);
-        System.out.println(users.get(index));
+        if(index!=-1){
+            System.out.println("请输入要更正的用户密码");
+            String pass=sc.next();
+            users.get(index).setuPass(pass);
+            System.out.println(users.get(index));
+        }else{
+            System.out.println("无此用户");
+        }
+
     }
     public void amendsex(){
         int index=find();
@@ -112,24 +121,39 @@ public class AdminController {
     }
     public void amendage(){
         int index=find();
-        System.out.println("请输入要更正的用户年龄");
-        int age=sc.nextInt();
-        users.get(index).setuAge(age);
-        System.out.println(users.get(index));
+        if(index!=-1){
+            System.out.println("请输入要更正的用户年龄");
+            int age=sc.nextInt();
+            users.get(index).setuAge(age);
+            System.out.println(users.get(index));
+        }else{
+            System.out.println("无此用户");
+        }
+
     }
     public void amendlevel(){
         int index=find();
-        System.out.println("请输入要更正的用户等级");
-        int level=sc.nextInt();
-        users.get(index).setuLevel(level);
-        System.out.println(users.get(index));
+        if(index!=-1){
+            System.out.println("请输入要更正的用户等级");
+            int level=sc.nextInt();
+            users.get(index).setuLevel(level);
+            System.out.println(users.get(index));
+        }else{
+            System.out.println("无此用户");
+        }
+
     }
     public void amendpoint(){
-        int index=find();
-        System.out.println("请输入要更正的用户等级");
-        int point=sc.nextInt();
-        users.get(index).setUpoint(point);
-        System.out.println(users.get(index));
+        int index = find();
+        if(index!=-1){
+            System.out.println("请输入要更正的用户积分");
+            int point=sc.nextInt();
+            users.get(index).setUpoint(point);
+            System.out.println(users.get(index));
+
+        }else{ System.out.println("无此用户");
+
+        }
 
     }
 

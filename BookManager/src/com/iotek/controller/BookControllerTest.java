@@ -2,10 +2,14 @@ package com.iotek.controller;
 
 import com.iotek.constant.BookType;
 import com.iotek.dao.BookDaoImplTest;
+import com.iotek.dao.BookInfoDao;
+import com.iotek.dao.BookInfoDaoImpl;
+import com.iotek.dao.BorrowDaoImpl;
 import com.iotek.entity.Book;
+import com.iotek.entity.BookInfo;
+import com.sun.org.apache.xpath.internal.SourceTree;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -14,53 +18,41 @@ import java.util.Scanner;
 public class BookControllerTest {
     BookDaoImplTest bookDaoImpl = new BookDaoImplTest();
     Scanner sc = new Scanner(System.in);
-
-    public void ContinueChoose(Method method) {
-        System.out.println("是否继续:Y/N");
-        sc = new Scanner(System.in);
-        String yn = sc.next();
-        if (yn.equals("Y")) {
-            try {
-                method.invoke(this);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return;
-        } else {
-            return;
-        }
-    }
-
-
+    BookInfoDaoImpl bookInfoDao = new BookInfoDaoImpl();
+    public Book book=new Book();
     public void add() throws Exception {
-        String bName = SetBookName();
-        String author = SetAuthor();
-        int bStock = SetbStock();
-        double price = Setprice();
-        BookType Btypes = SetBtypes();
+        String bName = ReadBookName();
+        String author = ReadAuthor();
+        int bStock = ReadbStock();
+        double price = ReadPrice();
+        BookType Btypes = ReadBtypes();
         Book book = new Book();
         book.setbName(bName);
         book.setbStock(bStock);
         book.setbType(Btypes);
         book.setAuthor(author);
         book.setPrice(price);
+        book.setbId(bookDaoImpl.getMaxId() + 1);
         bookDaoImpl.addBook(book);
-
+        bookInfoDao.addBook(book);
     }
 
-    public void refreshBook(Book book){
+    public void showAllBookInfo() {
+        bookInfoDao.showAllBookInfo();
+    }
+
+    public void refreshBook(Book book) {
         bookDaoImpl.refreshBook(book);
     }
 
 
-    public BookType SetBtypes() {
+    public BookType ReadBtypes() {
         System.out.println("请输入书籍类型:");
         PrintBookType();
-        String Btype = sc.next();
+        String Btype;
         BookType Btypes;
         while (true) {
+            Btype = sc.next();
             Btypes = StringToBookType(Btype);
             if (Btypes == null) {
                 System.out.println("书籍类型不满足");
@@ -72,55 +64,50 @@ public class BookControllerTest {
         return Btypes;
     }
 
-    public double Setprice() {
+    public double ReadPrice() {
         System.out.println("请输入书籍价格");
         double price = 0;
-        boolean flag = false;
-        while (true) {
-            if (flag) {
-                break;
-            }
+        boolean flag = true;
+        while (flag) {
+
             try {
                 sc = new Scanner(System.in);
                 flag = true;
                 price = sc.nextDouble();
+                flag = false;
             } catch (Exception e) {
                 System.out.println("价格不是数字");
                 System.out.println("请重新输入");
-                flag = false;
+
             }
         }
         return price;
     }
 
-    public int SetbStock() {
+    public int ReadbStock() {
         System.out.println("请输入书籍数量");
         int bStock = 0;
-        boolean flag = false;
-        while (true) {
-            if (flag) {
-                break;
-            }
+        boolean flag = true;
+        while (flag) {
             try {
                 sc = new Scanner(System.in);
-                flag = true;
                 bStock = sc.nextInt();
+                flag = false;
             } catch (Exception e) {
                 System.out.println("数量不是数字");
                 System.out.println("请重新输入");
-                flag = false;
             }
         }
         return bStock;
     }
 
-    public String SetBookName() {
+    public String ReadBookName() {
         System.out.println("请输入书籍名称");
         String bName = sc.next();
         return bName;
     }
 
-    public String SetAuthor() {
+    public String ReadAuthor() {
         System.out.println("请输入书籍作者");
         String author = sc.next();
         return author;
@@ -134,7 +121,7 @@ public class BookControllerTest {
         System.out.print(" " + BookType.生活.type);
         System.out.print(" " + BookType.人文社科.type);
         System.out.print(" " + BookType.经管.type);
-        System.out.print(" " + BookType.科技.type);
+        System.out.println(" " + BookType.科技.type);
     }
 
     private BookType StringToBookType(String btype) {
@@ -177,10 +164,16 @@ public class BookControllerTest {
     }
 
     public void del() {
-        System.out.println("请输入要删除的书名");
-        String Dname = sc.next();
+        System.out.println("请输入要删除的书名信息");
+        String Dname = ReadBookName();
+        Book book = bookDaoImpl.findBook(Dname);
+
         bookDaoImpl.delBook(Dname);
-        System.out.println("书本《" + Dname + "》删除成功");
+        if (book == null) {
+            return;
+        } else {
+            bookInfoDao.delBook(book.getbId());
+        }
 
     }
 
@@ -190,56 +183,63 @@ public class BookControllerTest {
     }
 
 
-    public void Borrow() throws Exception {
-        System.out.println("请输入你要借的书名");
-        String bookname = sc.next();
-        int bookcount = 0;
-        if (find(bookname) != null) {
-            bookcount = find(bookname).getbStock();
+    public void Borrow(UserController userController) throws Exception {
+        String bookname = ReadBookName();
+        Book book = find(bookname);
 
-            System.out.println("请输入你要的数量");
-            int borrownum = 0;
-            try {
-                borrownum = sc.nextInt();
-            } catch (Exception e) {
-                System.out.println("数量必须是数字");
-                ContinueChoose(this.getClass().getMethod("Borrow"));
-                return;
+        if (book != null) {
+            int bookcount = book.getbStock();
+            int borrownum = ReadbStock();
 
-
-            }
-            if (borrownum > bookcount) {
-                System.out.println("借的数量过大");
-                ContinueChoose(this.getClass().getMethod("Borrow"));
-                return;
-            } else {
-                bookDaoImpl.borrow(bookname, borrownum);
-
+            while (true) {
+                if (borrownum > bookcount) {
+                    System.out.println("借的数量过大");
+                } else {
+                    bookDaoImpl.borrow(bookname, borrownum);
+                    bookInfoDao.borrow(book.getbId(), borrownum, userController);
+                    userController.borrow(borrownum);
+                    break;
+                }
             }
 
         }
     }
+
     /*还书*/
-    public void returnBook() throws Exception {
-        System.out.println("请输入你要还的书名");
-        String bookname = sc.next();
-        System.out.println("请输入数量");
-        int returnwnum = 0;
-        try {
-            returnwnum = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("数量必须是数字");
-            ContinueChoose(this.getClass().getMethod("returnBook"));
-            return;
+    public void returnBook(UserController userController) throws Exception {
+        String bookname = ReadBookName();
+
+        Book book = find(bookname);
+
+        if (book != null) {
+            System.out.println("请确认书籍是否完整：损坏/丢失/完整");
+            String judge = sc.next();
+            if (judge.equals("损坏")) {
+                userController.user.setUpoint(userController.user.getUpoint() - 10);
+
+            } else if (judge.equals("丢失")) {
+                System.out.println("此账户冻结");
+
+            } else if (judge.equals("完整")) {
+                int returnwnum = ReadbStock();
+                bookDaoImpl.returnBook(bookname, returnwnum);
+                bookInfoDao.returnBook(book.getbId(), returnwnum, userController);
+
+            }
+
         }
-        bookDaoImpl.returnBook(bookname, returnwnum);
-
     }
-
 
     public void find() {
         System.out.println("请输入你要找的书名");
         String bookname = sc.next();
-        bookDaoImpl.showOneBook(find(bookname));
+        Book book = find(bookname);
+        if (book != null) {
+            bookInfoDao.showFindedBookInfos(book.getbId());
+        }
+    }
+
+    public void showBorrowMessage() {
+        bookInfoDao.showBorrowMessage();
     }
 }

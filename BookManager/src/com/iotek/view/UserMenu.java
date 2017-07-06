@@ -21,7 +21,8 @@ public class UserMenu {
             System.out.println("2.查看图书信息");
             System.out.println("3.借书");
             System.out.println("4.还书");
-            System.out.println("5.退出");
+            System.out.println("5.书籍租借预约");
+            System.out.println("0.退出");
             System.out.println("-------------");
             System.out.println("请选择：");
             int choose = 0;
@@ -44,6 +45,8 @@ public class UserMenu {
                     userController.returnBook();
                     break;
                 case 5:
+                    break;
+                case 0:
                     flag=false;
                     break;
                 default:

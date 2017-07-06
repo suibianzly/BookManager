@@ -19,19 +19,22 @@ public class BookDaoImplTest implements BookDao {
     ObjectInputStream ois = null;
     FileOutputStream fos = null;
     ObjectOutputStream oos = null;
+    //   public int max_id=getMaxId();
 
     public BookDaoImplTest() {
         try {
             booksMap = (HashMap<String, Book>) IoUntils.load(path, fis, ois).readObject();
             IoUntils.closeAll(fis, ois, fos, oos);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-        } catch (NullPointerException e) {
-
+        } catch (Exception e) {
         }
+        }
+            //e.printStackTrace();
+      //  } catch (ClassNotFoundException e) {
+     //   } catch (NullPointerException e) {
 
-    }
+       // }
+
+
 
     @Override
     public void addBook(Book books) {
@@ -46,7 +49,6 @@ public class BookDaoImplTest implements BookDao {
         booksMap.get(books.getbName()).setbType(books.getbType());
         booksMap.get(books.getbName()).setAuthor(books.getAuthor());
         booksMap.get(books.getbName()).setPrice(books.getPrice());
-
     }
 
     public void refreshBook(Book books) {
@@ -56,7 +58,6 @@ public class BookDaoImplTest implements BookDao {
             System.out.println("书本《" + books.getbName() + "》不存在");
             return;
         }
-
         saveBook();
         System.out.println("书本《" + books.getbName() + "》修改完成");
     }
@@ -87,13 +88,11 @@ public class BookDaoImplTest implements BookDao {
     }
 
     public void showOneBook(Book book) {
-        System.out.print("书名:" + book.getbName());
-        System.out.print(" 作者:" + book.getAuthor());
-        System.out.print(" 数量:" + book.getbStock());
-        System.out.print(" 价格:" + book.getPrice());
-        System.out.print(" 类型:" + book.getbType());
-        System.out.print(" 借出次数:" + book.getbNumber());
-        System.out.println(" 书的ID:" + book.getbId());
+        if (book == null) {
+            return;
+        } else {
+            System.out.println(book);
+        }
 
     }
 
@@ -101,16 +100,16 @@ public class BookDaoImplTest implements BookDao {
         if (booksMap.containsKey(dname)) {
             booksMap.remove(dname);
             saveBook();
-
+            System.out.println("书本《" + dname + "》删除成功");
         } else {
             System.out.println("书本《" + dname + "》不存在");
         }
+
     }
 
 
     public Book findBook(String bookname) {
         if (booksMap.containsKey(bookname)) {
-
             showOneBook(booksMap.get(bookname));
             return booksMap.get(bookname);
         } else {
@@ -137,7 +136,23 @@ public class BookDaoImplTest implements BookDao {
     }
 
     public void returnBook(String bookname, int returnwnum) {
-        booksMap.get(bookname).addbStock(returnwnum);
+        booksMap.get(bookname).returnStock(returnwnum);
         saveBook();
+    }
+
+
+    public int getMaxId() {
+        int maxid = 0;
+        Iterator bookit = booksMap.keySet().iterator();
+        while (bookit.hasNext()) {
+
+            Book book = booksMap.get(bookit.next());
+            if (maxid < book.getbId()) {
+                maxid = book.getbId();
+            }
+
+
+        }
+        return maxid;
     }
 }

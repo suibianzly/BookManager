@@ -19,57 +19,61 @@ public class ChangeMenu {
     private double price;
 
     public void cMenu(BookControllerTest bookControllerTest) {
-        System.out.println("ÇëÊäÈëÄãÒªĞŞ¸ÄµÄÊéÃû");
+        System.out.println("è¯·è¾“å…¥ä½ è¦ä¿®æ”¹çš„ä¹¦å");
         String bname = sc.next();
-        book = bookControllerTest.find(bname);
-        bStock = book.getbStock();
-        bType = book.getbType();
-        author = book.getAuthor();
-        price = book.getPrice();
-        while (runmenu(bookControllerTest)) {
 
+        book = bookControllerTest.find(bname);
+        if (book == null) {return;
+        } else {
+           // bStock = book.getbStock();
+            bType = book.getbType();
+            author = book.getAuthor();
+            price = book.getPrice();
+            while (runmenu(bookControllerTest)) {
+            }
+           // book.setbStock(bStock);
+            book.setbType(bType);
+            book.setAuthor(author);
+            book.setPrice(price);
+            bookControllerTest.refreshBook(book);
         }
-        book.setbStock(bStock);
-        book.setbType(bType);
-        book.setAuthor(author);
-        book.setPrice(price);
-        bookControllerTest.refreshBook(book);
+        return;
     }
 
     private boolean runmenu(BookControllerTest bookControllerTest) {
-        System.out.println("ÇëÊäÈëÄãÒªĞŞ¸ÄÀàĞÍ");
-        System.out.println("1.×÷Õß");
-        System.out.println("2.ÊıÁ¿");
-        System.out.println("3.¼Û¸ñ");
-        System.out.println("4.ÀàĞÍ");
-        System.out.println("5.ÍË³ö");
+        System.out.println("è¯·è¾“å…¥ä½ è¦ä¿®æ”¹ç±»å‹");
+        System.out.println("1.ä½œè€…");
+      //  System.out.println("2.æ•°é‡");
+        System.out.println("2.ä»·æ ¼");
+        System.out.println("3.ç±»å‹");
+        System.out.println("0.é€€å‡º");
         System.out.println("-------------");
-        System.out.println("ÇëÑ¡Ôñ£º");
+        System.out.println("è¯·é€‰æ‹©ï¼š");
         int choose = 0;
         try {
             choose = sc.nextInt();
         } catch (Exception e) {
-            System.out.println("ÇëÊäÈëÊı×Ö");
-            cMenu(bookControllerTest);
+            System.out.println("è¯·è¾“å…¥æ•°å­—");
+            return true;
         }
         switch (choose) {
             case 1:
-                author = bookControllerTest.SetAuthor();
+                author = bookControllerTest.ReadAuthor();
                 return true;
             //break;
-            case 2:
-                bStock = bookControllerTest.SetbStock();
-                return true;
+         //   case 2:
+               // bStock = bookControllerTest.ReadbStock();
+                //return true;
             //    break;
+            case 2:
+                price = bookControllerTest.ReadPrice();
+                return true;
+            //  break;
             case 3:
-                price = bookControllerTest.Setprice();
+                bType = bookControllerTest.ReadBtypes();
                 return true;
             //  break;
-            case 4:
-                bType = bookControllerTest.SetBtypes();
-                return true;
-            //  break;
-            case 5:
+            case 0:
                 return false;//;
             default:
                 return true;

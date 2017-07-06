@@ -9,20 +9,18 @@ public class Borrow implements Serializable {
     private Integer oID;
     private int uId;
     private int biid;
-    private int oStock;
     private String lendtime;
     private String returntime;
 
     public Borrow() {
     }
 
-    public Borrow(Integer oID, int uId, int biid, int oStock, String lendtime, String returntime) {
+    public Borrow(Integer oID,int uId,  int biid,  String lendtime) {
+        this.uId=uId;
         this.oID = oID;
-        this.uId = uId;
         this.biid = biid;
-        this.oStock = oStock;
         this.lendtime = lendtime;
-        this.returntime = returntime;
+
     }
 
     public Integer getoID() {
@@ -49,13 +47,7 @@ public class Borrow implements Serializable {
         this.biid = biid;
     }
 
-    public int getoStock() {
-        return oStock;
-    }
 
-    public void setoStock(int oStock) {
-        this.oStock = oStock;
-    }
 
     public String getLendtime() {
         return lendtime;
@@ -71,5 +63,16 @@ public class Borrow implements Serializable {
 
     public void setReturntime(String returntime) {
         this.returntime = returntime;
+    }
+
+    @Override
+    public String toString() {
+        return "Borrow{" +
+                "oID=" + oID +
+                ", uId=" + uId +
+                ", biid=" + biid +
+                ", lendtime='" + lendtime + '\'' +
+                ", returntime='" + returntime + '\'' +
+                '}';
     }
 }

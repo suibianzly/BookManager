@@ -70,7 +70,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public void SaveUser(ArrayList<User> users) {
-        this.users=users;
+        this.users = users;
         try {
             //将数据写入文件中。
             IoUntils.save(path, fos, oos).writeObject(users);
@@ -79,7 +79,6 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
     }
-
 
 
     public int getMaxId() {
@@ -93,5 +92,17 @@ public class UserDaoImpl implements UserDao {
 
         }
         return maxid;
+    }
+
+
+  public void borrow(User user, int borrownum) {
+        user.setUpoint(user.getUpoint() - borrownum);
+        for (int i = 0; i < users.size(); i++) {
+            User olduser = users.get(i);
+            if (olduser.getuName().equals(user.getuName())) {
+                users.set(i, user);
+            }
+        }
+        SaveUser(users);
     }
 }

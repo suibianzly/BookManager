@@ -18,11 +18,9 @@ public class MainMenu {
 		while (flat) {
 			System.out.println("1.登录");
 			System.out.println("2.注册");
-			System.out.println("3.退出");
+			System.out.println("0.退出");
 			System.out.println("-------------");
 			System.out.println("请选择：");
-
-
 			int choose = 0;
 			try {
 				choose = scanner.nextInt();
@@ -37,11 +35,11 @@ public class MainMenu {
 				case 2:
 					userController.regist();
 					break;
-				case 3:
+				case 0:
 					System.exit(0);
 					break;
 				default:
-					mai();
+					//mai();
 					break;
 			}
 		}

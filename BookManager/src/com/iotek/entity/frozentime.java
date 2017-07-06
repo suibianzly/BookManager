@@ -3,16 +3,16 @@ package com.iotek.entity;
 /**
  * Created by Administrator on 2017/7/4.
  */
-public class frozentime {
+public class Frozentime {
     private int fId;
     private int uId;
     private String frozentime;
     private String unfrozentime;
 
-    public frozentime() {
+    public Frozentime() {
     }
 
-    public frozentime(int fId, int uId, String frozentime, String unfrozentime) {
+    public Frozentime(int fId, int uId, String frozentime, String unfrozentime) {
         this.fId = fId;
         this.uId = uId;
         this.frozentime = frozentime;
