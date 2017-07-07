@@ -7,6 +7,7 @@ import com.iotek.until.IoUntils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by Administrator on 2017/7/4.
@@ -23,11 +24,9 @@ public class ReservtionDaoImpl {
         try {
             res=(ArrayList<Reservation>) IoUntils.load(path,fis,ois).readObject();
             IoUntils.closeAll(fis,ois,fos,oos);
-        } catch (IOException e) {
+        } catch (Exception e) {
            // e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            //e.printStackTrace();
-        }
+        } 
 
 
     }
@@ -51,12 +50,26 @@ public class ReservtionDaoImpl {
         }return maxid;
 
     }
-    public void addReservtion(UserController userController,BookControllerTest bookControllerTest){
+
+    public String ReadBookName() {
+        System.out.println("请输入书籍名称");
+        Scanner sc=new Scanner(System.in);
+        String bName = sc.next();
+        return bName;
+    }
+    public void addReservtion(UserController userController){
+       BookControllerTest bookControllerTest=userController.bookControllerTest;
         int rId=Maxid()+1;
         int uId=userController.user.getuId();
-        int bId=bookControllerTest.book.getbId();
+        int bId=bookControllerTest.getBookIdWithBookName(ReadBookName());
         Reservation reservation=new Reservation(rId,uId,bId);
+        res.add(reservation);
         saveReservation();
+    }
+    public void print(){
+        for(Reservation reservation:res){
+            System.out.println(reservation.toString());
+        }
     }
 
 }

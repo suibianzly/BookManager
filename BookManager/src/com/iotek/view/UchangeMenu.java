@@ -22,7 +22,7 @@ public class UchangeMenu {
 //        String name=sc.next();
 //        int index=adminController.find();
         boolean falg=true;
-        while (true){
+        while (falg){
             System.out.println("请选择要修改的类型");
             System.out.println("1 用户名");
             System.out.println("2 密码");

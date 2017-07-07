@@ -21,7 +21,6 @@ public class BookMenu {
             System.out.println("5 查找书籍");
             System.out.println("6 查看所有书籍信息");
             System.out.println("7 查看借书记录");
-
             System.out.println("0 返回上一层");
             sc = new Scanner(System.in);
             String key = sc.next();

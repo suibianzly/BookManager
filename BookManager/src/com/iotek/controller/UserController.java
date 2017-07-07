@@ -2,6 +2,7 @@ package com.iotek.controller;
 
 
 import com.iotek.dao.UserDaoImpl;
+import com.iotek.entity.Book;
 import com.iotek.entity.User;
 import com.iotek.view.ManagerMenu;
 import com.iotek.view.UserMenu;
@@ -9,10 +10,10 @@ import com.iotek.view.UserMenu;
 import java.util.Scanner;
 
 public class UserController {
-    UserDaoImpl userDaoImpl = new UserDaoImpl();
+    public UserDaoImpl userDaoImpl = new UserDaoImpl();
     Scanner scanner = new Scanner(System.in);
     public User user = new User();
-    BookControllerTest bookControllerTest = new BookControllerTest();
+    public BookControllerTest bookControllerTest = new BookControllerTest();
 
     /*登录*/
     public void login() throws Exception {
@@ -46,7 +47,6 @@ public class UserController {
 
         }
     }
-
 
 
     public void regist() throws Exception {
@@ -100,6 +100,7 @@ public class UserController {
         user.setuLevel(0);
         user.setuAge(age);
         user.setuSex(sex);
+        user.setUpoint(10);
         int MaxId = userDaoImpl.getMaxId();
         int Id = MaxId + 1;
         user.setuId(Id);
@@ -135,8 +136,14 @@ public class UserController {
     public void borrow(int borrownum) {
         userDaoImpl.borrow(user, borrownum);
     }
-    public void reservtion(){
-        System.out.println("请输入需要预约的书籍名称");
+//    public void reservtionid(){
+//        System.out.println("请输入需要预约的书籍名称");
+//        String bookname = bookControllerTest.ReadBookName();
+//        Book book = bookControllerTest.find(bookname);
+//        int bId=book.getbId();
 
-    }
+
+//}
+
+
 }

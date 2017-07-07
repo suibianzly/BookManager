@@ -155,4 +155,9 @@ public class BookDaoImplTest implements BookDao {
         }
         return maxid;
     }
+
+
+    public int getBookIdWithBookName(String bookname) {
+        return findBook(bookname).getbId();
+    }
 }

@@ -69,6 +69,22 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    public void changeUser(User user) {
+        for (int i = 0; i <users.size() ; i++) {
+            User us=users.get(i);
+            if(us!=null&&us.getuId()==user.getuId()){
+                users.set(i,user);
+            }
+
+        }
+        try {
+            IoUntils.save(path, fos, oos).writeObject(users);
+            IoUntils.closeAll(fis, ois, fos, oos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void SaveUser(ArrayList<User> users) {
         this.users = users;
         try {

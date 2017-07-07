@@ -60,12 +60,7 @@ public class ChangeMenu {
             case 1:
                 author = bookControllerTest.ReadAuthor();
                 return true;
-            //break;
-         //   case 2:
-               // bStock = bookControllerTest.ReadbStock();
-                //return true;
-            //    break;
-            case 2:
+                     case 2:
                 price = bookControllerTest.ReadPrice();
                 return true;
             //  break;

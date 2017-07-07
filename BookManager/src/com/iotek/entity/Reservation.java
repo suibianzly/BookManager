@@ -42,4 +42,13 @@ public class Reservation implements Serializable {
     public void setbId(int bId) {
         this.bId = bId;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "rId=" + rId +
+                ", uId=" + uId +
+                ", bId=" + bId +
+                '}';
+    }
 }

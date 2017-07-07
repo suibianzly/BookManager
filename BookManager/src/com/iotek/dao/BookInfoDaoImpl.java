@@ -17,7 +17,7 @@ public class BookInfoDaoImpl implements BookInfoDao {
     private static String path = "bookinfo.txt";
     //private ArrayList<BookInfo> bookInfos = new ArrayList<>();
     private HashMap<Integer, BookInfo> bookInfosmap = new HashMap<Integer, BookInfo>();
-    BorrowDaoImpl borrowDao = new BorrowDaoImpl();
+    public BorrowDaoImpl borrowDao = new BorrowDaoImpl();
 
     FileInputStream fis = null;
     ObjectInputStream ois = null;
@@ -82,7 +82,8 @@ public class BookInfoDaoImpl implements BookInfoDao {
             //e.printStackTrace();
         }
     }
-//展示书本信息
+
+    //展示书本信息
     public void showAllBookInfo() {
         Iterator bifoit = bookInfosmap.keySet().iterator();
         while (bifoit.hasNext()) {
@@ -107,7 +108,8 @@ public class BookInfoDaoImpl implements BookInfoDao {
 
         saveBook();
     }
-//打印找到的书本信息
+
+    //打印找到的书本信息
     public void showFindedBookInfos(int bid) {
 
         ArrayList<BookInfo> bookinfolist = findBookWithBid(bid);
@@ -117,11 +119,13 @@ public class BookInfoDaoImpl implements BookInfoDao {
 
         }
     }
-//借书信息
-public void showBorrowMessage(){
-    borrowDao.showBorrowMessage();
 
-}
+    //借书信息
+    public void showBorrowMessage() {
+        borrowDao.showBorrowMessage();
+
+    }
+
     public void borrow(int bid, int borrownum, UserController userController) {
         ArrayList<BookInfo> bookinfolist = findBookWithBid(bid);
 
@@ -129,10 +133,10 @@ public void showBorrowMessage(){
         for (int i = 0; i < bookinfolist.size(); i++) {
 
             BookInfo bookinfo = bookinfolist.get(i);
-            if (bookinfo.getInout() == false) {
+            if (bookinfo.getInout() == false && bookinfo.getLost() == false) {
                 bookinfo.setInout(true);
                 bookInfosmap.put(bookinfo.getBiid(), bookinfo);
-                borrowDao.borrow(userController,bookinfo.getBiid());
+                borrowDao.borrow(userController, bookinfo.getBiid());
                 borrownum -= 1;
             }
             if (borrownum == 0) {
@@ -145,14 +149,16 @@ public void showBorrowMessage(){
     }
 
 
-    public void returnBook(int bid, int returnwnum, UserController userController) {
+    public void returnBook(int bid, int returnwnum, UserController userController,boolean Inout, boolean state, boolean Lost) {
 
         ArrayList<BookInfo> bookinfolist = findBookWithBid(bid);
         for (int i = 0; i < bookinfolist.size(); i++) {
 
             BookInfo bookinfo = bookinfolist.get(i);
-            if (bookinfo.getInout() == true) {
-                bookinfo.setInout(false);
+            if (bookinfo.getInout() && !bookinfo.getLost()) {
+                bookinfo.setInout(Inout);
+                bookinfo.setState(state);
+                bookinfo.setLost(Lost);
                 bookInfosmap.put(bookinfo.getBiid(), bookinfo);
                 borrowDao.returnBook(userController, bookinfo.getBiid());
 
